@@ -12,7 +12,7 @@ import os.path
 import pandas as pd
 import numpy as np
 
-dataset = './titanic.csv'
+dataset = './dataset/titanic.csv'
 use = ["pclass", "sex", "age", "sibsp", "parch", "embarked", "survived"]
 
 def get_titanic_data():
@@ -64,11 +64,11 @@ accuracy = accuracy_score(y_pred, tar_test)
 print("Accuracy: ", accuracy)
 print("-------------------------\n\n")
 
-#dot_data = StringIO()
-#export_graphviz(clf, out_file=dot_data, filled=True, rounded=True,
-#                special_characters=True, 
-#                feature_names = ["pclass", "sex", "age", "sibsp", "parch", "embarked"], 
-#                class_names=['0', '1'])
-#graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
-#graph.write_png('titanic_tree.png')
-#Image(graph.create_png())
+dot_data = StringIO()
+export_graphviz(clf, out_file=dot_data, filled=True, rounded=True,
+                special_characters=True, 
+                feature_names = ["pclass", "sex", "age", "sibsp", "parch", "embarked"], 
+                class_names=['0', '1'])
+graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
+graph.write_png('titanic_tree.png')
+Image(graph.create_png())
