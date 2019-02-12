@@ -2,6 +2,7 @@ from sklearn import preprocessing
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from sklearn.model_selection import cross_val_score
 from sklearn.tree import export_graphviz
 from sklearn.externals.six import StringIO
 from IPython.display import Image
@@ -53,7 +54,10 @@ print(feat_train.head())
 print("-------------------------\n\n")
 
 print("5- Building the decision tree")
-clf = DecisionTreeClassifier(max_depth = 6, random_state=1)
+clf = DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=4,
+                    max_features=None, max_leaf_nodes=2, min_samples_leaf=2,
+                    min_samples_split=2, min_weight_fraction_leaf=0.32,
+                    presort=False, random_state=1, splitter='random')
 
 clf = clf.fit(feat_train, tar_train)
 
@@ -63,6 +67,11 @@ accuracy = accuracy_score(y_pred, tar_test)
 
 print("Accuracy: ", accuracy)
 print("-------------------------\n\n")
+
+scores = cross_val_score(clf, features, target, cv=10)
+print("mean: {:.3f} (std: {:.3f})".format(scores.mean(),
+                                          scores.std()),
+                                          end="\n\n" )
 
 dot_data = StringIO()
 export_graphviz(clf, out_file=dot_data, filled=True, rounded=True,
